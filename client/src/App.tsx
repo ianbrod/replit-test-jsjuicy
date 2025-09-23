@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 import SynthesisPage from "./pages/SynthesisPage";
 import DashboardPage from "./pages/DashboardPage";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
@@ -18,6 +19,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/login" component={LoginPage} />
+      <Route path="/signup" component={SignupPage} />
       <Route path="/synthesis">
         <ProtectedRoute>
           <SynthesisPage />

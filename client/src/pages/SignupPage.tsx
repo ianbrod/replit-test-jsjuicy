@@ -8,13 +8,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/use-toast';
 
-export default function LoginPage() {
+export default function SignupPage() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [, navigate] = useLocation();
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,12 +23,12 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      await login(email, password);
+      await signup(name, email, password);
       navigate('/synthesis');
     } catch (error: any) {
       toast({
-        title: "Login Failed",
-        description: error.response?.data?.message || "Invalid email or password",
+        title: "Signup Failed",
+        description: error.response?.data?.message || "Unable to create account",
         variant: "destructive",
       });
     } finally {
@@ -47,10 +48,23 @@ export default function LoginPage() {
                 </div>
                 <span className="text-2xl font-bold text-foreground">JobSniper</span>
               </div>
-              <p className="text-muted-foreground">Log in to manage your career profile.</p>
+              <p className="text-muted-foreground">Create your account to get started.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your full name"
+                  required
+                  data-testid="input-name"
+                />
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email address</Label>
                 <Input
@@ -93,34 +107,24 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div className="text-sm">
-                <Button 
-                  variant="link" 
-                  className="p-0 h-auto font-normal"
-                  data-testid="forgot-password-link"
-                >
-                  Forgot your password?
-                </Button>
-              </div>
-
               <Button 
                 type="submit" 
                 className="w-full"
                 disabled={isLoading}
-                data-testid="button-login"
+                data-testid="button-signup"
               >
-                {isLoading ? "Logging in..." : "Log In"}
+                {isLoading ? "Creating account..." : "Sign Up"}
               </Button>
 
               <div className="text-center text-sm text-muted-foreground">
-                Don't have an account?{' '}
+                Already have an account?{' '}
                 <Button 
                   variant="link" 
                   className="p-0 h-auto font-normal"
-                  onClick={() => navigate('/signup')}
-                  data-testid="sign-up-link"
+                  onClick={() => navigate('/login')}
+                  data-testid="sign-in-link"
                 >
-                  Sign up
+                  Sign in
                 </Button>
               </div>
             </form>
