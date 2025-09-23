@@ -54,6 +54,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     localStorage.removeItem('auth-token');
     delete api.defaults.headers.common['Authorization'];
+    
+    // Clear React Query cache to remove sensitive data
+    const { queryClient } = require('../lib/queryClient');
+    queryClient.clear();
+    
     setUser(null);
   };
 

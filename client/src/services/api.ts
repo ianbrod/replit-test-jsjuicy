@@ -25,9 +25,19 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      // Clear auth state
       localStorage.removeItem('auth-token');
-      window.location.href = '/login';
+      delete api.defaults.headers.common['Authorization'];
+      
+      // Clear React Query cache to remove sensitive data  
+      const { queryClient } = require('../lib/queryClient');
+      queryClient.clear();
+      
+      // Redirect to login
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
