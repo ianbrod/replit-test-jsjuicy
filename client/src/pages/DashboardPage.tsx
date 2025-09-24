@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { Plus, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,11 +12,15 @@ import { ActivityItem } from '../types';
 
 export default function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [, navigate] = useLocation();
 
   // Fetch high-potential matches
-  const { data: matches = [], isLoading: matchesLoading } = useQuery<OpportunityWithMatch[]>({
+  const { data: matchesData, isLoading: matchesLoading, error: matchesError } = useQuery<OpportunityWithMatch[]>({
     queryKey: ['/api/opportunities/matches'],
   });
+
+  // Ensure matches is always an array
+  const matches = Array.isArray(matchesData) ? matchesData : [];
 
   // Fetch dashboard stats
   const { data: stats } = useQuery<DashboardStats>({
@@ -48,6 +53,23 @@ export default function DashboardPage() {
   const handleJobDetails = (job: OpportunityWithMatch) => {
     console.log('View job details:', job);
     // TODO: Open job details modal or navigate to details page
+  };
+
+  // Navigation handlers for dashboard buttons
+  const handleNewApplication = () => {
+    navigate('/opportunities');
+  };
+
+  const handleFindOpportunities = () => {
+    navigate('/opportunities');
+  };
+
+  const handleUpdateResume = () => {
+    navigate('/master-cv');
+  };
+
+  const handleProfileSettings = () => {
+    navigate('/master-cv');
   };
 
   return (
@@ -83,7 +105,10 @@ export default function DashboardPage() {
                     Dashboard
                   </h1>
                 </div>
-                <Button data-testid="new-application-button">
+                <Button 
+                  onClick={handleNewApplication}
+                  data-testid="new-application-button"
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   New Application
                 </Button>
@@ -109,6 +134,11 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   ))}
+                </div>
+              ) : matches.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground" data-testid="no-matches">
+                  <p>No high-potential matches available yet.</p>
+                  <p className="text-sm mt-2">Check back soon for new opportunities!</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" data-testid="high-potential-matches">
@@ -169,14 +199,28 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <Button className="w-full justify-start" data-testid="find-opportunities-button">
+                    <Button 
+                      className="w-full justify-start" 
+                      onClick={handleFindOpportunities}
+                      data-testid="find-opportunities-button"
+                    >
                       <Plus className="w-4 h-4 mr-2" />
                       Find New Opportunities
                     </Button>
-                    <Button variant="secondary" className="w-full justify-start" data-testid="update-resume-button">
+                    <Button 
+                      variant="secondary" 
+                      className="w-full justify-start" 
+                      onClick={handleUpdateResume}
+                      data-testid="update-resume-button"
+                    >
                       Update Resume
                     </Button>
-                    <Button variant="secondary" className="w-full justify-start" data-testid="profile-settings-button">
+                    <Button 
+                      variant="secondary" 
+                      className="w-full justify-start" 
+                      onClick={handleProfileSettings}
+                      data-testid="profile-settings-button"
+                    >
                       Profile Settings
                     </Button>
                   </div>

@@ -20,9 +20,12 @@ export default function OpportunityTable({ opportunities, onUpgrade }: Opportuni
   const { canAccess } = useSubscription();
   const canAccessAll = canAccess('unlimited-opportunities');
 
+  // Ensure opportunities is always an array
+  const safeOpportunities = Array.isArray(opportunities) ? opportunities : [];
+
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const visibleIds = opportunities.slice(0, canAccessAll ? opportunities.length : 3).map(opp => opp.id);
+      const visibleIds = safeOpportunities.slice(0, canAccessAll ? safeOpportunities.length : 3).map(opp => opp.id);
       setSelectedItems(visibleIds);
     } else {
       setSelectedItems([]);
@@ -37,8 +40,8 @@ export default function OpportunityTable({ opportunities, onUpgrade }: Opportuni
     }
   };
 
-  const visibleOpportunities = canAccessAll ? opportunities : opportunities.slice(0, 3);
-  const blurredOpportunities = canAccessAll ? [] : opportunities.slice(3);
+  const visibleOpportunities = canAccessAll ? safeOpportunities : safeOpportunities.slice(0, 3);
+  const blurredOpportunities = canAccessAll ? [] : safeOpportunities.slice(3);
 
   return (
     <div className="bg-card rounded-lg border border-border overflow-hidden">

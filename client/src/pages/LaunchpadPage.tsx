@@ -72,39 +72,41 @@ export default function LaunchpadPage() {
         )}
 
         {/* Main Content */}
-        <div className="flex-1 lg:ml-0">
-          <div className="p-6">
-            <div className="mb-8">
-              <div className="flex items-center mb-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="lg:hidden mr-2"
-                  onClick={() => setIsSidebarOpen(true)}
-                  data-testid="mobile-menu-button"
-                >
-                  <Menu className="w-5 h-5" />
-                </Button>
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground mb-2" data-testid="page-title">
-                    Launchpad
-                  </h1>
-                  <p className="text-muted-foreground" data-testid="page-description">
-                    Choose from professionally designed resume templates
-                  </p>
+        <div className="flex-1 lg:ml-0 overflow-hidden">
+          <div className="h-screen overflow-y-auto">
+            <div className="p-6">
+              <div className="mb-8">
+                <div className="flex items-center mb-4">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="lg:hidden mr-2"
+                    onClick={() => setIsSidebarOpen(true)}
+                    data-testid="mobile-menu-button"
+                  >
+                    <Menu className="w-5 h-5" />
+                  </Button>
+                  <div>
+                    <h1 className="text-2xl font-bold text-foreground mb-2" data-testid="page-title">
+                      Launchpad
+                    </h1>
+                    <p className="text-muted-foreground" data-testid="page-description">
+                      Choose from professionally designed resume templates
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Resume Templates Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" data-testid="templates-grid">
-              {RESUME_TEMPLATES.map((template) => (
-                <ResumeTemplate
-                  key={template.id}
-                  template={template}
-                  onUse={handleUseTemplate}
-                />
-              ))}
+              {/* Resume Templates Grid - Reduced to 1/4 size */}
+              <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4" data-testid="templates-grid">
+                {RESUME_TEMPLATES.map((template) => (
+                  <ResumeTemplate
+                    key={template.id}
+                    template={template}
+                    onUse={handleUseTemplate}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

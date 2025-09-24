@@ -1,0 +1,47 @@
+Of course. Here is a cleaned-up and structured prompt for your developer agent based on your audio feedback.
+
+***
+
+### **Subject: UI/UX Feedback and Next Steps**
+
+Excellent work on the recent updates. Most of the UI looks amazing. Here is a list of action items and bug fixes to prioritize for the next development cycle.
+
+#### **1. Highest Priority: Implement the User Onboarding Flow**
+
+The entire onboarding process is currently missing and needs to be built out. This is the top priority.
+
+The flow should be as follows:
+* **Step 1: Material Upload:** Upon first login, prompt the user to upload their professional materials. This includes their resume (allow for multiple files), cover letters, etc. This step must be skippable.
+* **Step 2: Voice Input:** After the material upload screen, present a page for voice input. This step must also be skippable.
+* **Step 3: Profile Confirmation Page:** After the materials and/or voice input are processed in the background, display the generated profile on a confirmation page for the user's review.
+    * **Confidence Highlighting:** The text on this page should be highlighted based on the AI's confidence level:
+        * **Medium Confidence:** Use a semi-transparent yellow or amber highlight.
+        * **Low Confidence:** Use a semi-transparent red highlight.
+        * **High Confidence:** No highlight.
+    * **Editing & Approval:** The user must be able to edit the profile text directly on this page. They must then click a button to **approve** the profile. If they do not approve it, the profile is discarded, and they are taken to an empty profile page.
+    * **Note on Mockups:** I will provide a mockup for this page, but be aware that it shows the content in a modal. Please implement this as a full-screen view that takes up the main content area, not a modal. The content should be treated as a long, scrollable document (equivalent to 4-5 pages).
+
+*If a user skips the onboarding steps, they should land on a blank profile. They can add their materials and information later through the settings page.*
+
+---
+
+#### **2. General UI/UX Fixes and Features**
+
+* **Left Navigation Panel:**
+    * Make the panel collapsible and expandable.
+    * Remove the large "Log Out" button from the bottom of the panel.
+    * Log out functionality, along with Settings, Help, and Theme options, should be moved into a dropdown menu that appears when the user clicks their avatar icon.
+
+* **Launchpad Page:**
+    * The cards on this page are too large. Please reduce their size to approximately **one-quarter (1/4)** of their current size.
+    * Fix the scrolling bug on this page. The left panel should remain fixed in place during scrolling, consistent with the behavior on other pages, but it currently scrolls with the rest of the page.
+
+* **Dashboard Page:**
+    * The buttons for "Quick Actions," "Update Resume," and "Profile Settings" are not functional. Please wire up the client-side routing so they navigate to the correct pages.
+
+---
+
+#### **3. Content & Data Population**
+
+* **Opportunities Page:** This page is currently an empty shell. Please populate it with dummy data to build out the interface.
+* **Testing Assumption:** For all development and testing, you can assume the user has an upgraded plan.

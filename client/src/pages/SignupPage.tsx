@@ -24,7 +24,7 @@ export default function SignupPage() {
 
     try {
       await signup(name, email, password);
-      navigate('/synthesis');
+      navigate('/onboarding/upload');
     } catch (error: any) {
       toast({
         title: "Signup Failed",

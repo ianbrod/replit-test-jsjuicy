@@ -63,9 +63,9 @@ export default function SynthesisPage() {
       );
       setProgress(100);
 
-      // Navigate to dashboard after animation
+      // Navigate to Master CV confirmation after animation
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/master-cv');
       }, 1000);
     }, 5000);
 

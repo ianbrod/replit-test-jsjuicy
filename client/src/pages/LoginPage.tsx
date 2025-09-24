@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      navigate('/synthesis');
+      navigate('/onboarding/upload');
     } catch (error: any) {
       toast({
         title: "Login Failed",
